@@ -1,0 +1,5 @@
+# Kiroween judging requires the /.kiro directory IN the repo.
+# Do NOT ignore .kiro or any of its subfolders — that can disqualify the entry.
+.DS_Store
+node_modules/
+*.log

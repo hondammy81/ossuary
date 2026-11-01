@@ -1,0 +1,1 @@
+{"hooks":[{"action":{"command":"bun test","type":"command"},"matcher":"\\.js$","name":"Run tests on save","trigger":"PostFileSave"}],"version":"v1"}
