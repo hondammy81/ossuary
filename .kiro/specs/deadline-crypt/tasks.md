@@ -18,3 +18,8 @@
 - [ ] 6. Manual pass on a phone-sized viewport: one focal point per
       view, no horizontal scroll, calm palette per steering/product.md.
       _Requirements: 5_
+      _Progress 2026-11-02: CSS/markup audit done at 390px — single
+      column, calm palette confirmed, long-title overflow guard added,
+      phone tap targets raised to 44px and inputs to 16px (no iOS
+      focus zoom) in the ≤640px block. Copy audit: no punitive
+      language found. Remaining: eyeball on a physical phone._
