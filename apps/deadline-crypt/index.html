@@ -72,6 +72,7 @@
       font-size: var(--text-base);
       font-weight: 500;
       color: var(--color-bone);
+      overflow-wrap: break-word;
     }
 
     .deadline-card__meta {
@@ -151,6 +152,23 @@
       .deadline-card__actions {
         width: 100%;
         justify-content: flex-start;
+      }
+
+      /* Manual pass (task 6): comfortable phone tap targets, and
+         16px form controls so iOS Safari does not auto-zoom on focus */
+      .btn {
+        min-height: 44px;
+      }
+
+      .btn--sm {
+        min-height: 44px;
+        padding: var(--space-2) var(--space-4);
+      }
+
+      .input,
+      .select,
+      .textarea {
+        font-size: var(--text-base);
       }
     }
   </style>
