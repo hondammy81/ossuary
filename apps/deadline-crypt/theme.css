@@ -1,0 +1,620 @@
+/* =========================================================
+   Ossuary — calm, haunted design system
+   =========================================================
+   Tokens → Reset → Layout → Type → Cards → Buttons →
+   Form controls → Flame component → Utilities
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. Design tokens
+   --------------------------------------------------------- */
+:root {
+  /* Palette */
+  --color-ground:    #1a1a1f;   /* deep charcoal — page background */
+  --color-surface:   #24242b;   /* slightly lighter — card surface  */
+  --color-raised:    #2e2e38;   /* interactive surface on hover     */
+  --color-border:    #3a3a47;   /* subtle dividers                  */
+  --color-bone:      #e8e4d9;   /* bone-white — primary text        */
+  --color-muted:     #9a9488;   /* secondary / metadata text        */
+  --color-dim:       #5c5852;   /* placeholder, disabled            */
+  --color-ember:     #d45f2a;   /* single accent — ember orange     */
+  --color-ember-dim: #7a3518;   /* ember pressed / dark tint        */
+  --color-ember-glow:#f07840;   /* ember hover / flame highlight    */
+
+  /* Semantic roles */
+  --color-bg:        var(--color-ground);
+  --color-fg:        var(--color-bone);
+  --color-accent:    var(--color-ember);
+  --color-danger:    #b04040;
+  --color-ok:        #4a8c6a;
+
+  /* Typography */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Mono", ui-monospace, monospace;
+
+  --text-xs:   0.75rem;   /* 12 px */
+  --text-sm:   0.875rem;  /* 14 px */
+  --text-base: 1rem;      /* 16 px */
+  --text-lg:   1.125rem;  /* 18 px */
+  --text-xl:   1.375rem;  /* 22 px */
+  --text-2xl:  1.75rem;   /* 28 px */
+  --text-3xl:  2.25rem;   /* 36 px */
+
+  --leading-tight:  1.25;
+  --leading-normal: 1.6;
+
+  /* Spacing scale (4-point grid) */
+  --space-1:  0.25rem;   /*  4 px */
+  --space-2:  0.5rem;    /*  8 px */
+  --space-3:  0.75rem;   /* 12 px */
+  --space-4:  1rem;      /* 16 px */
+  --space-5:  1.25rem;   /* 20 px */
+  --space-6:  1.5rem;    /* 24 px */
+  --space-8:  2rem;      /* 32 px */
+  --space-10: 2.5rem;    /* 40 px */
+  --space-12: 3rem;      /* 48 px */
+  --space-16: 4rem;      /* 64 px */
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.45);
+  --shadow-focus: 0 0 0 3px rgba(212, 95, 42, 0.45);
+
+  /* Transitions */
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --ease:     ease;
+}
+
+/* ---------------------------------------------------------
+   2. Reset & base
+   --------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: var(--color-accent); text-decoration: none; }
+a:hover { color: var(--color-ember-glow); }
+button, input, select, textarea { font: inherit; }
+ul, ol { list-style: none; }
+hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: var(--space-6) 0;
+}
+
+/* ---------------------------------------------------------
+   3. Layout
+   --------------------------------------------------------- */
+
+/* App shell — two-panel: sidebar nav + main content */
+.app-shell {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 100dvh;
+}
+
+.app-topbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.app-topbar__title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.app-topbar__actions {
+  margin-left: auto;
+  display: flex;
+  gap: var(--space-3);
+}
+
+/* Content area below topbar */
+.app-body {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  height: calc(100dvh - 52px); /* 52 px = topbar height */
+  overflow: hidden;
+}
+
+/* Sidebar: list panel */
+.list-panel {
+  overflow-y: auto;
+  border-right: 1px solid var(--color-border);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Detail / form panel */
+.detail-panel {
+  overflow-y: auto;
+  padding: var(--space-8) var(--space-10);
+  max-width: 680px;
+}
+
+/* Centered single-column page (onboarding, export, etc.) */
+.page-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+  gap: var(--space-6);
+}
+
+/* Standard content container */
+.container {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+/* Responsive: stack to single column on small screens */
+@media (max-width: 640px) {
+  .app-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+    height: auto;
+  }
+
+  .list-panel {
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    max-height: 40dvh;
+  }
+
+  .detail-panel {
+    padding: var(--space-5) var(--space-4);
+    max-width: 100%;
+  }
+}
+
+/* ---------------------------------------------------------
+   4. Typography helpers
+   --------------------------------------------------------- */
+.text-xs   { font-size: var(--text-xs);  }
+.text-sm   { font-size: var(--text-sm);  }
+.text-base { font-size: var(--text-base);}
+.text-lg   { font-size: var(--text-lg);  }
+.text-xl   { font-size: var(--text-xl);  }
+.text-2xl  { font-size: var(--text-2xl); }
+.text-3xl  { font-size: var(--text-3xl); }
+
+.text-muted   { color: var(--color-muted);  }
+.text-dim     { color: var(--color-dim);    }
+.text-accent  { color: var(--color-accent); }
+.text-danger  { color: var(--color-danger); }
+.text-ok      { color: var(--color-ok);     }
+
+.font-mono  { font-family: var(--font-mono); }
+.font-bold  { font-weight: 600; }
+.leading-tight { line-height: var(--leading-tight); }
+
+h1, h2, h3, h4 {
+  line-height: var(--leading-tight);
+  font-weight: 600;
+  color: var(--color-bone);
+}
+
+h1 { font-size: var(--text-3xl); margin-bottom: var(--space-4); }
+h2 { font-size: var(--text-2xl); margin-bottom: var(--space-3); }
+h3 { font-size: var(--text-xl);  margin-bottom: var(--space-2); }
+h4 { font-size: var(--text-lg);  margin-bottom: var(--space-2); }
+
+p  { margin-bottom: var(--space-4); }
+p:last-child { margin-bottom: 0; }
+
+.meta {
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+/* ---------------------------------------------------------
+   5. Cards
+   --------------------------------------------------------- */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5) var(--space-6);
+  box-shadow: var(--shadow-card);
+}
+
+.card--interactive {
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease);
+}
+.card--interactive:hover {
+  background: var(--color-raised);
+  border-color: var(--color-dim);
+}
+.card--interactive:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+
+/* selected state — e.g. active item in list panel */
+.card--selected {
+  border-color: var(--color-accent);
+  background: var(--color-raised);
+}
+
+/* Danger/graveyard tint */
+.card--dead {
+  opacity: 0.6;
+  border-color: var(--color-border);
+}
+
+/* List item card — compact */
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease);
+}
+.list-item:hover   { background: var(--color-raised); }
+.list-item--active {
+  background: var(--color-raised);
+  border-color: var(--color-accent);
+}
+
+.list-item__icon  { flex-shrink: 0; font-size: var(--text-lg); }
+.list-item__body  { flex: 1; min-width: 0; }
+.list-item__title {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.list-item__sub   {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+/* ---------------------------------------------------------
+   6. Buttons
+   --------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease),
+              color      var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
+  user-select: none;
+  white-space: nowrap;
+}
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Primary — ember fill */
+.btn--primary {
+  background: var(--color-ember);
+  color: #fff;
+  border-color: var(--color-ember);
+}
+.btn--primary:hover:not(:disabled) {
+  background: var(--color-ember-glow);
+  border-color: var(--color-ember-glow);
+}
+.btn--primary:active:not(:disabled) {
+  background: var(--color-ember-dim);
+  border-color: var(--color-ember-dim);
+}
+
+/* Ghost — outline only */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-bone);
+  border-color: var(--color-border);
+}
+.btn--ghost:hover:not(:disabled) {
+  background: var(--color-raised);
+  border-color: var(--color-dim);
+}
+
+/* Danger */
+.btn--danger {
+  background: transparent;
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+.btn--danger:hover:not(:disabled) {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+/* Icon-only button */
+.btn--icon {
+  padding: var(--space-2);
+  background: transparent;
+  border-color: transparent;
+  color: var(--color-muted);
+}
+.btn--icon:hover:not(:disabled) { color: var(--color-bone); }
+
+/* Small size modifier */
+.btn--sm {
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--text-xs);
+}
+
+/* ---------------------------------------------------------
+   7. Form controls
+   --------------------------------------------------------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.field:last-child { margin-bottom: 0; }
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-bone);
+}
+
+.label--required::after {
+  content: " *";
+  color: var(--color-accent);
+}
+
+.hint {
+  font-size: var(--text-xs);
+  color: var(--color-muted);
+}
+
+.input,
+.select,
+.textarea {
+  background: var(--color-ground);
+  color: var(--color-bone);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  width: 100%;
+  transition: border-color var(--dur-fast) var(--ease),
+              box-shadow    var(--dur-fast) var(--ease);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-dim);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-focus);
+}
+
+.input:disabled,
+.select:disabled,
+.textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+/* Validation states */
+.input--error,
+.select--error,
+.textarea--error {
+  border-color: var(--color-danger);
+}
+.field-error {
+  font-size: var(--text-xs);
+  color: var(--color-danger);
+}
+
+/* Checkbox / radio group */
+.check-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.check-label input[type="checkbox"],
+.check-label input[type="radio"] {
+  accent-color: var(--color-accent);
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+
+/* Form action row */
+.form-actions {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--space-6);
+}
+
+/* ---------------------------------------------------------
+   8. Flame component
+   ---------------------------------------------------------
+   Three flame levels: kindling, burning, blazing.
+   Applied as data-flame="kindling|burning|blazing" or
+   as modifier classes .flame--kindling etc.
+   --------------------------------------------------------- */
+.flame {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-lg);
+  line-height: 1;
+  /* default: no active streak */
+  filter: grayscale(1) opacity(0.35);
+  transition: filter var(--dur-base) var(--ease);
+}
+
+.flame--kindling,
+[data-flame="kindling"] .flame {
+  filter: grayscale(0.5) opacity(0.6);
+  color: #c87020;
+}
+
+.flame--burning,
+[data-flame="burning"] .flame {
+  filter: none;
+  color: var(--color-ember);
+}
+
+.flame--blazing,
+[data-flame="blazing"] .flame {
+  filter: none;
+  color: var(--color-ember-glow);
+  text-shadow: 0 0 10px rgba(240, 120, 64, 0.7);
+}
+
+/* Streak badge — number beside the flame */
+.streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.streak-badge .flame { font-size: 1em; }
+
+[data-flame="kindling"] .streak-badge,
+.streak-badge--kindling { color: #c87020; }
+
+[data-flame="burning"]  .streak-badge,
+.streak-badge--burning  { color: var(--color-ember); }
+
+[data-flame="blazing"]  .streak-badge,
+.streak-badge--blazing  { color: var(--color-ember-glow); }
+
+/* Deadline bucket badges */
+.bucket {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.bucket--alive  { background: rgba(74,140,106,0.18); color: var(--color-ok); }
+.bucket--dying  { background: rgba(212,95,42,0.18);  color: var(--color-ember); }
+.bucket--dead   { background: rgba(176,64,64,0.18);  color: var(--color-danger); }
+
+/* ---------------------------------------------------------
+   9. Empty state
+   --------------------------------------------------------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-12) var(--space-4);
+  text-align: center;
+  color: var(--color-muted);
+}
+
+.empty-state__icon { font-size: 3rem; opacity: 0.5; }
+.empty-state__title { font-size: var(--text-lg); font-weight: 500; }
+.empty-state__body  { font-size: var(--text-sm);  max-width: 32ch; }
+
+/* ---------------------------------------------------------
+   10. Section / divider helpers
+   --------------------------------------------------------- */
+.section-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-dim);
+  padding: var(--space-3) var(--space-4) var(--space-1);
+}
+
+.stack  { display: flex; flex-direction: column; gap: var(--space-3); }
+.row    { display: flex; align-items: center;    gap: var(--space-3); }
+.spacer { flex: 1; }
+
+/* Visually hidden (accessible) */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
