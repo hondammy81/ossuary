@@ -4,7 +4,7 @@ inclusion: always
 
 # Product — Ossuary
 
-Ossuary is a skeleton for small, local-first web apps, plus two complete
+Ossuary is a skeleton for small, local-first web apps, plus three complete
 apps built from it. Everything it ships follows three product rules:
 
 1. **Local-first, always.** No backend, no accounts, no tracking. User
@@ -17,6 +17,7 @@ apps built from it. Everything it ships follows three product rules:
    resurrected from; broken streaks dim a candle. The product never
    punishes, nags, or guilt-trips the user.
 
-Audiences: students and independent hunters (Deadline Crypt) and anyone
-building a daily practice (Ritual). Both apps must be fully usable
-offline, on a phone, in under a minute from first open.
+Audiences: students and independent hunters (Deadline Crypt), anyone
+building a daily practice (Ritual), and households keeping track of
+food before it spoils (Pantry Ghost). All three apps must be fully
+usable offline, on a phone, in under a minute from first open.
