@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ritual</title>
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+    /* -------------------------------------------------------
+       Ritual — app-level overrides
+       The skeleton theme.css handles all tokens and components.
+       ------------------------------------------------------- */
+
+    /* Single-column scroll layout */
+    .app-body {
+      display: block;
+      height: auto;
+      overflow: visible;
+    }
+
+    .app-main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    /* Add-ritual card */
+    .add-card {
+      margin-bottom: var(--space-8);
+    }
+
+    .add-card h2 {
+      margin-bottom: var(--space-5);
+      font-size: var(--text-lg);
+    }
+
+    /* -------------------------------------------------------
+       Ritual card
+       ------------------------------------------------------- */
+    .ritual-card {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-5);
+      padding: var(--space-5) var(--space-6);
+      margin-bottom: var(--space-4);
+    }
+
+    .ritual-card__flame-col {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .ritual-card__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ritual-card__name {
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--color-bone);
+    }
+
+    .ritual-card__streak {
+      font-size: var(--text-sm);
+      color: var(--color-muted);
+      margin-top: var(--space-1);
+    }
+
+    .ritual-card__streak strong {
+      color: var(--color-bone);
+    }
+
+    .ritual-card__actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    /* rename / remove controls — initially hidden, shown by JS */
+    .ritual-card__edit-row {
+      display: none;
+      margin-top: var(--space-3);
+      gap: var(--space-2);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .ritual-card__edit-row.is-open {
+      display: flex;
+    }
+
+    .ritual-card__edit-row .input {
+      flex: 1;
+      min-width: 140px;
+    }
+
+    /* -------------------------------------------------------
+       Flame component
+       A single ember dot whose glow scales with flame level.
+       ------------------------------------------------------- */
+    .flame {
+      width: 28px;
+      height: 28px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      background: var(--color-ember-dim);
+      transition: background var(--dur-base) var(--ease),
+                  box-shadow  var(--dur-base) var(--ease);
+    }
+
+    /* none — unlit, dim */
+    .flame--none {
+      background: var(--color-border);
+      box-shadow: none;
+    }
+
+    /* kindling — 1–2 days */
+    .flame--kindling {
+      background: var(--color-ember-dim);
+      box-shadow: 0 0  6px 2px rgba(212, 95, 42, 0.35);
+    }
+
+    /* burning — 3–6 days */
+    .flame--burning {
+      background: var(--color-ember);
+      box-shadow: 0 0 12px 4px rgba(212, 95, 42, 0.55),
+                  0 0 24px 8px rgba(212, 95, 42, 0.20);
+    }
+
+    /* blazing — 7+ days */
+    .flame--blazing {
+      background: var(--color-ember-glow);
+      box-shadow: 0 0 16px 6px rgba(240, 120, 64, 0.70),
+                  0 0 32px 14px rgba(240, 120, 64, 0.30);
+    }
+
+    .flame-label {
+      font-size: var(--text-xs);
+      color: var(--color-dim);
+      text-transform: capitalize;
+      letter-spacing: 0.04em;
+    }
+
+    .flame-label--kindling { color: var(--color-ember-dim); }
+    .flame-label--burning  { color: var(--color-ember);     }
+    .flame-label--blazing  { color: var(--color-ember-glow);}
+
+    /* checked-in badge */
+    .checked-in-badge {
+      font-size: var(--text-xs);
+      color: var(--color-ok);
+    }
+
+    /* -------------------------------------------------------
+       Sections
+       ------------------------------------------------------- */
+    .section-heading {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-dim);
+      margin-bottom: var(--space-3);
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .rituals-section {
+      margin-bottom: var(--space-8);
+    }
+
+    /* -------------------------------------------------------
+       Export / import
+       ------------------------------------------------------- */
+    .export-section {
+      margin-top: var(--space-10);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .export-section h3 {
+      margin-bottom: var(--space-4);
+    }
+
+    .export-section__row {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .import-error {
+      font-size: var(--text-xs);
+      color: var(--color-danger);
+      margin-top: var(--space-2);
+    }
+
+    .import-ok {
+      font-size: var(--text-xs);
+      color: var(--color-ok);
+      margin-top: var(--space-2);
+    }
+
+    /* -------------------------------------------------------
+       Responsive
+       ------------------------------------------------------- */
+    @media (max-width: 640px) {
+      .app-main {
+        padding: var(--space-5) var(--space-4);
+      }
+
+      .ritual-card {
+        flex-direction: row;
+        gap: var(--space-4);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
