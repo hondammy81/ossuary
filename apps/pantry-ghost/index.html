@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantry Ghost</title>
+  <link rel="stylesheet" href="theme.css" />
+  <style>
+    /* -------------------------------------------------------
+       Pantry Ghost — app-level overrides
+       The skeleton theme.css handles all tokens and components.
+       ------------------------------------------------------- */
+
+    /* Single-column scroll layout */
+    .app-body {
+      display: block;
+      height: auto;
+      overflow: visible;
+    }
+
+    .app-main {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    /* -------------------------------------------------------
+       Summary bar
+       ------------------------------------------------------- */
+    .pantry-summary {
+      display: flex;
+      gap: var(--space-5);
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .pantry-summary__item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-1);
+    }
+
+    .pantry-summary__count {
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      color: var(--color-bone);
+      line-height: 1;
+    }
+
+    .pantry-summary__label {
+      font-size: var(--text-xs);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .pantry-summary__label--fresh   { color: var(--color-ok);     }
+    .pantry-summary__label--fading  { color: var(--color-ember);  }
+    .pantry-summary__label--spoiled { color: var(--color-danger); }
+
+    /* -------------------------------------------------------
+       Add-item card
+       ------------------------------------------------------- */
+    .add-card {
+      margin-bottom: var(--space-8);
+    }
+
+    .add-card h2 {
+      margin-bottom: var(--space-5);
+      font-size: var(--text-lg);
+    }
+
+    .add-card .form-row {
+      display: flex;
+      gap: var(--space-4);
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .add-card .form-row .field {
+      flex: 1;
+      min-width: 140px;
+      margin-bottom: 0;
+    }
+
+    /* -------------------------------------------------------
+       Pantry item row
+       ------------------------------------------------------- */
+    .pantry-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-4) var(--space-5);
+      margin-bottom: var(--space-3);
+      border-radius: var(--radius-md);
+    }
+
+    /* Freshness dot */
+    .freshness-dot {
+      flex-shrink: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .freshness-dot--fresh   { background: var(--color-ok);     box-shadow: 0 0 6px var(--color-ok); }
+    .freshness-dot--fading  { background: var(--color-ember);  box-shadow: 0 0 6px var(--color-ember); }
+    .freshness-dot--spoiled { background: var(--color-danger); box-shadow: none; }
+
+    .pantry-item__body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .pantry-item__name {
+      font-size: var(--text-base);
+      font-weight: 500;
+      color: var(--color-bone);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .pantry-item__meta {
+      font-size: var(--text-xs);
+      color: var(--color-muted);
+      margin-top: var(--space-1);
+    }
+
+    .pantry-item__badge {
+      flex-shrink: 0;
+    }
+
+    /* Freshness badges */
+    .freshness-badge {
+      display: inline-block;
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .freshness-badge--fresh {
+      background: rgba(74, 140, 106, 0.18);
+      color: var(--color-ok);
+    }
+
+    .freshness-badge--fading {
+      background: rgba(212, 95, 42, 0.18);
+      color: var(--color-ember);
+    }
+
+    .freshness-badge--spoiled {
+      background: rgba(176, 64, 64, 0.18);
+      color: var(--color-danger);
+    }
+
+    .pantry-item__action {
+      flex-shrink: 0;
+    }
+
+    /* Spoiled items: dim slightly */
+    .pantry-item--spoiled {
+      opacity: 0.7;
+    }
+
+    /* -------------------------------------------------------
+       Sections
+       ------------------------------------------------------- */
+    .pantry-section {
+      margin-bottom: var(--space-8);
+    }
+
+    /* -------------------------------------------------------
+       Export / import
+       ------------------------------------------------------- */
+    .export-section {
+      margin-top: var(--space-10);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .export-section h3 {
+      margin-bottom: var(--space-4);
+    }
+
+    .export-section__row {
+      display: flex;
+      gap: var(--space-3);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .import-error {
+      font-size: var(--text-xs);
+      color: var(--color-danger);
+      margin-top: var(--space-2);
+    }
+
+    .import-ok {
+      font-size: var(--text-xs);
+      color: var(--color-ok);
+      margin-top: var(--space-2);
+    }
+
+    /* -------------------------------------------------------
+       Responsive
+       ------------------------------------------------------- */
+    @media (max-width: 640px) {
+      .app-main {
+        padding: var(--space-5) var(--space-4);
+      }
+
+      .pantry-item {
+        flex-wrap: wrap;
+      }
+
+      .add-card .form-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
