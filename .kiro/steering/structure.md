@@ -10,6 +10,7 @@ skeleton/              the reusable template (theme.css, store.js, dates.js, she
 apps/
   deadline-crypt/      App 1 — index.html, app.js, model.js
   ritual/              App 2 — index.html, app.js, model.js
+  pantry-ghost/        App 3 — index.html, app.js, model.js
 ```
 
 Rules:
