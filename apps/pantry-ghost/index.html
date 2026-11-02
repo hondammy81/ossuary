@@ -221,6 +221,23 @@
       .add-card .form-row {
         flex-direction: column;
       }
+
+      /* Manual pass (task 5): comfortable phone tap targets, and
+         16px form controls so iOS Safari does not auto-zoom on focus */
+      .btn {
+        min-height: 44px;
+      }
+
+      .btn--sm {
+        min-height: 44px;
+        padding: var(--space-2) var(--space-4);
+      }
+
+      .input,
+      .select,
+      .textarea {
+        font-size: var(--text-base);
+      }
     }
   </style>
 </head>
